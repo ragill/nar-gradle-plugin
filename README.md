@@ -44,7 +44,7 @@ plugins {
 
     buildscript {
         repositories {
-          url "https://plugins.gradle.org/m2/"
+          jcenter()
         }
         dependencies {
             classpath (
