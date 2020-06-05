@@ -1,0 +1,113 @@
+plugins {
+	id "com.gradle.plugin-publish" version "0.12.0"
+	id "com.github.spotbugs" version "${spotBugsVersion}"
+	id "io.wusa.semver-git-plugin" version "2.2.0"
+	id 'java-gradle-plugin'
+	id 'groovy'
+	id 'maven-publish'
+}
+defaultTasks 'clean','build'
+group = 'me.ragill'
+sourceCompatibility = "${javaVersion}"
+targetCompatibility = "${javaVersion}"
+
+//Repositories for the projects
+repositories {
+	jcenter()
+	maven {
+		url 'https://jitpack.io'
+	}
+}
+
+publishing {
+	repositories {
+		maven {
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/ragill/nar-gradle-plugin")
+			credentials {
+				username project.properties['gpr.username']
+				password project.properties['gpr.password']
+			}
+		}
+	}
+	publications {
+		gpr(MavenPublication) {
+			from(components.java)
+		}
+	}
+}
+dependencies{
+	implementation(
+		"org.codehaus.groovy:groovy:${groovyVersion}",
+		gradleApi()
+	)
+	testImplementation(
+		gradleTestKit(),
+		"org.spockframework:spock-core:${spockVersion}"
+	)
+}
+
+gradlePlugin {
+	plugins {
+		simplePlugin {
+			id = 'narPlugin'
+			implementationClass = 'me.ragill.gradle.plugins.nar.NarPlugin'
+		}
+	}
+}
+
+sourceSets {
+	functionalTest {
+	}
+}
+
+gradlePlugin.testSourceSets(sourceSets.functionalTest)
+configurations.functionalTestImplementation.extendsFrom(configurations.testImplementation)
+
+// Add a task to run the functional tests
+task functionalTest(type: Test) {
+	testClassesDirs = sourceSets.functionalTest.output.classesDirs
+	classpath = sourceSets.functionalTest.runtimeClasspath
+}
+//create tasks to jar up sources,tests, javadoc
+['sources':'sourceSets.main.AllJava',
+	'javadoc':'javadoc.destinationDir',
+	'test-sources':'sourceSets.test.AllJava',
+	'test': 'sourcesets.test.classes'].each { 
+		map -> task "${map.key}Jar" (type:Jar){
+				archiveClassifier = "${map.key}"
+				from "${map.value}"
+			}
+		}
+
+check {
+	// Run the functional tests as part of `check`
+	dependsOn(tasks.functionalTest)
+}
+
+spotbugs{
+	excludeFilter=file("spotbugs-exclude.xml")
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+	def tasks = taskGraph.getAllTasks()
+	tasks.each {
+		def taskName = it.getName()
+		//disable spotbugsTest since auxClasspath not set correctly
+		if(taskName == 'spotbugsTest') {
+			it.setOnlyIf { false }
+		}
+	}
+}
+pluginBundle {
+  website = 'https://github.com/ragill/nar-gradle-plugin'
+  vcsUrl = 'https://github.com/ragill/nar-gradle-plugin'
+  description = 'Plugin that packages Nifi Processors as a Nar archive'
+  tags = ['nifi']
+
+  plugins {
+    greetingsPlugin {
+      displayName = 'Gradle Nifi Plugin'
+    }
+  }
+}
