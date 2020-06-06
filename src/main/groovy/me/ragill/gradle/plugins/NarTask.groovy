@@ -1,7 +1,7 @@
 /**
  * 
  */
-package me.ragill.gradle.plugins.nar;
+package me.ragill.gradle.plugins;
 
 import org.gradle.api.Task
 import org.gradle.api.artifacts.Configuration

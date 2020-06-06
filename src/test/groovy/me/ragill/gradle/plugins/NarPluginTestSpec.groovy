@@ -1,15 +1,19 @@
-package me.ragill.gradle.plugins.nar
+package me.ragill.gradle.plugins
 
 
 import org.gradle.testfixtures.ProjectBuilder
+
+import me.ragill.gradle.plugins.NarPlugin
+import me.ragill.gradle.plugins.NarTask
+
+import static me.ragill.gradle.plugins.NarManifestEntry.*
+
 import org.gradle.api.Project
 import spock.lang.Specification
 import org.gradle.api.plugins.JavaPlugin
-import static me.ragill.gradle.plugins.nar.NarManifestEntry.*
-import me.ragill.gradle.plugins.nar.NarPlugin
 
 /**
- * Unit tests for the 'narPlugin'
+ * Unit tests for the 'nar-plugin'
  */
 public class NarPluginTestSpec extends Specification {
 

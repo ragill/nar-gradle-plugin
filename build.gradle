@@ -50,9 +50,9 @@ dependencies{
 
 gradlePlugin {
 	plugins {
-		simplePlugin {
-			id = 'narPlugin'
-			implementationClass = 'me.ragill.gradle.plugins.nar.NarPlugin'
+		narPlugin {
+			id = 'me.ragill.nar-plugin'
+			implementationClass = 'me.ragill.gradle.plugins.NarPlugin'
 		}
 	}
 }
@@ -107,7 +107,8 @@ pluginBundle {
   tags = ['nifi']
 
   plugins {
-    greetingsPlugin {
+    NarPlugin {
+	  id = 'me.ragill.nar-plugin'
       displayName = 'Gradle Nifi Plugin'
     }
   }

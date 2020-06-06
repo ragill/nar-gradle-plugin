@@ -1,11 +1,13 @@
-package me.ragill.gradle.plugins.nar;
+package me.ragill.gradle.plugins;
 
 import org.gradle.testfixtures.ProjectBuilder
+
+import me.ragill.gradle.plugins.NarTask
+
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.bundling.Jar
 import spock.lang.Specification
-import me.ragill.gradle.plugins.nar.NarTask
 
 /**
  * @author Richard A. Gill

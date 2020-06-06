@@ -1,7 +1,7 @@
 # Introduction
 
 This is a gradle plugin that packages Nifi processor projects
-into a \*.nar archive. The project has one task named **nar** that extends the Gradle Jar task. The project is based wholey on the work of [Robert Kuhne](https://github.com/sponiro/gradle-nar-plugin). The code is the same, the only tangible difference is that the original plugin did not package the archive up as a nar file. Instead, it mmade 2 archives: a jar file containing all of the code, and a nar file containing the manifest and dependences. Additionally, the project was languishing on Github and was thus not availabe to the Gradle community. The project was written in Groovy and in addition to having JUnit tests, makes use of the Spock testing framework to perform integration tests.
+into a \*.nar archive. The project has one task named **nar** that extends the Gradle Jar task. The project is based wholey on the work of [Robert Kuhne](https://github.com/sponiro/gradle-nar-plugin). The code is the same, the only tangible difference is that the original plugin did not package the archive up as a nar file. Instead, it made 2 archives: a jar file containing all of the code, and a nar file containing the manifest and dependences. Additionally, the project was languishing on Github and was thus not availabe to the Gradle community. The project was written in Groovy and in addition to having JUnit tests, makes use of the Spock testing framework to perform integration tests.
 
 The plugin manages the creation of all of the manifest entries and packaging of all of the dependencies for the Nifi processor. The processor’s dependencies are collected and placed into the META-INF/bundled-dependencies folder. The plugin creates manifest entries (*MANIFEST.MF*) for the plugin that are required by Nifi.
 
@@ -31,7 +31,7 @@ All of the values can be overriden by including a configuration block in the bui
 # Building
 
 Executing `./gradlew` builds and assembles the project
-Executing `./gradlew publishMavenLocal` creates all of the artifacts and pushes them to your local maven repository.
+Executing `./gradlew publishToMavenLocal` creates all of the artifacts and pushes them to your local maven repository.
 
 # Using
 
@@ -52,7 +52,7 @@ plugins {
             )
         }
     }
-    apply plugin: 'narPlugin'
+    apply plugin: 'nar-plugin'
 
 The buildscript{} block must be located at the top of a build.gradle file and must include the
 repositories where the plugin is located and the plugin as a classpath dependency. After the buildscript{} block,

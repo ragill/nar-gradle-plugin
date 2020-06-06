@@ -1,4 +1,4 @@
-package me.ragill.gradle.plugins.nar
+package me.ragill.gradle.plugins
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

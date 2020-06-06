@@ -1,4 +1,4 @@
-package me.ragill.gradle.plugins.nar
+package me.ragill.gradle.plugins
 
 import spock.lang.Specification
 import java.util.jar.Manifest
@@ -23,7 +23,7 @@ public class NarPluginFunctionalSpec extends Specification {
 		buildFile = testProjectDir.newFile('build.gradle')
 		buildFile << """
 			plugins {
-				id 'narPlugin'
+				id 'me.ragill.nar-plugin'
 			}
 			group = 'nar.test'
 			version = '${TEST_VERSION}'
@@ -62,7 +62,7 @@ public class NarPluginFunctionalSpec extends Specification {
 				mavenCentral()
 			}
 			dependencies {
-				nar 'org.apache.nifi:nifi-standard-services-api-nar:1.9.2'
+				nar 'org.apache.nifi:nifi-standard-services-api-nar:1.11.4'
 			}
 		"""
 		when:
@@ -81,7 +81,7 @@ public class NarPluginFunctionalSpec extends Specification {
 			manifest.getMainAttributes().getValue('Nar-Version') == '1.0'
 			manifest.getMainAttributes().getValue('Nar-Dependency-Group') == 'org.apache.nifi'
 			manifest.getMainAttributes().getValue('Nar-Dependency-Id') == 'nifi-standard-services-api-nar'
-			manifest.getMainAttributes().getValue('Nar-Dependency-Version') == '1.9.2'
+			manifest.getMainAttributes().getValue('Nar-Dependency-Version') == '1.11.4'
 	}
 	def "test multiple parent nar entries"() {
 
@@ -90,7 +90,7 @@ public class NarPluginFunctionalSpec extends Specification {
 				mavenCentral()
 			}
 			dependencies {
-				nar 'org.apache.nifi:nifi-standard-services-api-nar:1.9.2'
+				nar 'org.apache.nifi:nifi-standard-services-api-nar:1.11.4'
 				nar 'org.apache.nifi:nifi-enrich-nar:1.9.1'
 			}
 		"""
@@ -129,7 +129,7 @@ public class NarPluginFunctionalSpec extends Specification {
 				mavenCentral()
 			}
 			dependencies {
-				nar 'org.apache.nifi:nifi-standard-services-api-nar:1.9.2'
+				nar 'org.apache.nifi:nifi-standard-services-api-nar:1.11.4'
 			}
 			nar {
 				manifest {
