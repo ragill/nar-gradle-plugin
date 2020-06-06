@@ -107,7 +107,7 @@ pluginBundle {
   tags = ['nifi']
 
   plugins {
-    NarPlugin {
+    narPlugin {
 	  id = 'me.ragill.nar-plugin'
       displayName = 'Gradle Nifi Plugin'
     }
